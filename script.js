@@ -1,18 +1,24 @@
-let bandNames = ["The Beatles", "Led Zeppelin", "Pink Floyd", "The Who", "Queen"];
+let bandNames = ['The Rolling Stones', 'Pink Floyd', 'Led Zeppelin', 'The Beatles', 'Queen'];
 
-		function sortBandNames(bandNames) {
-			const articles = ['a', 'an', 'the'];
-			return bandNames.sort((a, b) => {
-				const aName = a.split(' ').filter(name => !articles.includes(name.toLowerCase())).join(' ');
-				const bName = b.split(' ').filter(name => !articles.includes(name.toLowerCase())).join(' ');
-				return aName.localeCompare(bName);
-			});
-		}
+// define an array of articles
+let articles = ['a', 'an', 'the'];
 
-		const sortedBandNames = sortBandNames(bandNames);
-		const bandList = document.getElementById('band');
-		sortedBandNames.forEach(name => {
-			const listItem = document.createElement('li');
-			listItem.innerText = name;
-			bandList.appendChild(listItem);
-		});
+// sort the band names in lexicographic order excluding articles
+bandNames.sort(function(a, b) {
+  // remove the articles from the band names
+  a = a.replace(/^(\W)?(a|an|the)\W/gi, '$1');
+  b = b.replace(/^(\W)?(a|an|the)\W/gi, '$1');
+  // compare the modified band names
+  return a.localeCompare(b);
+});
+
+// get the UL element by ID
+let bandList = document.getElementById('band');
+
+// loop through the sorted band names and add them to the UL element as list items
+for (let i = 0; i < bandNames.length; i++) {
+  let listItem = document.createElement('li');
+  let textNode = document.createTextNode(bandNames[i]);
+  listItem.appendChild(textNode);
+  bandList.appendChild(listItem);
+}
